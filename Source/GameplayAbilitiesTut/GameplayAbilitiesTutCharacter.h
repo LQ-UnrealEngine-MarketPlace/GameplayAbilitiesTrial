@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include <AbilitySystemInterface.h>
 #include "GameplayAbilitiesTutCharacter.generated.h"
 
+class UAbilitySystemComponent;
+
 UCLASS(config=Game)
-class AGameplayAbilitiesTutCharacter : public ACharacter
+class AGameplayAbilitiesTutCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -18,6 +21,10 @@ class AGameplayAbilitiesTutCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
+	/** Our ability system */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+	UAbilitySystemComponent* AbilitySystem;
 public:
 	AGameplayAbilitiesTutCharacter();
 
@@ -68,5 +75,8 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	// Inherited via IAbilitySystemInterface
+	virtual UAbilitySystemComponent * GetAbilitySystemComponent() const override;
 };
 

@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include <AbilitySystemComponent.h>
 
 //////////////////////////////////////////////////////////////////////////
 // AGameplayAbilitiesTutCharacter
@@ -45,6 +46,9 @@ AGameplayAbilitiesTutCharacter::AGameplayAbilitiesTutCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	//Our AbilitySystem Component
+	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,6 +78,11 @@ void AGameplayAbilitiesTutCharacter::SetupPlayerInputComponent(class UInputCompo
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AGameplayAbilitiesTutCharacter::OnResetVR);
+}
+
+UAbilitySystemComponent * AGameplayAbilitiesTutCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystem;
 }
 
 
