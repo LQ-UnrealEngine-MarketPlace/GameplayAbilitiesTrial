@@ -51,6 +51,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+
+	virtual void BeginPlay() override;
+
+
+	virtual void PossessedBy(AController* NewController) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
+		TSubclassOf<class UGameplayAbility> Ability;
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -93,8 +102,5 @@ public:
 
 	// Inherited via IAbilitySystemInterface
 	virtual UAbilitySystemComponent * GetAbilitySystemComponent() const override;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
-	//TSubclassOf<class UGameplayAbility> Ability;
 };
 

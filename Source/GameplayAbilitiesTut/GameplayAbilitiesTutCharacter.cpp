@@ -51,6 +51,25 @@ AGameplayAbilitiesTutCharacter::AGameplayAbilitiesTutCharacter()
 	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
 }
 
+void AGameplayAbilitiesTutCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	if (AbilitySystem)
+	{
+		if (HasAuthority() && Ability)
+		{
+			AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, 0));
+		}
+		AbilitySystem->InitAbilityActorInfo(this, this);
+	}
+}
+
+void AGameplayAbilitiesTutCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	AbilitySystem->RefreshAbilityActorInfo();
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
