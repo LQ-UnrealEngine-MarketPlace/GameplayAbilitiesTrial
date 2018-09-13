@@ -78,6 +78,7 @@ void AGameplayAbilitiesTutCharacter::SetupPlayerInputComponent(class UInputCompo
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AGameplayAbilitiesTutCharacter::OnResetVR);
+	AbilitySystem->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds("Confirm Input", "Cancel Input", "AbilityInput"));
 }
 
 UAbilitySystemComponent * AGameplayAbilitiesTutCharacter::GetAbilitySystemComponent() const
@@ -93,12 +94,12 @@ void AGameplayAbilitiesTutCharacter::OnResetVR()
 
 void AGameplayAbilitiesTutCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
-		Jump();
+	Jump();
 }
 
 void AGameplayAbilitiesTutCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
-		StopJumping();
+	StopJumping();
 }
 
 void AGameplayAbilitiesTutCharacter::TurnAtRate(float Rate)
@@ -129,12 +130,12 @@ void AGameplayAbilitiesTutCharacter::MoveForward(float Value)
 
 void AGameplayAbilitiesTutCharacter::MoveRight(float Value)
 {
-	if ( (Controller != NULL) && (Value != 0.0f) )
+	if ((Controller != NULL) && (Value != 0.0f))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
